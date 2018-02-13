@@ -7,9 +7,11 @@ it.optional = require('../extensions/it-optional');
 describe('01-strings-tasks', function() {
 
     it.optional('concatenateStrings should return concatenation of two strings', function() {
+        let a;
         assert.equal('aabb', tasks.concatenateStrings('aa','bb'));
         assert.equal('aa', tasks.concatenateStrings('aa',''));
         assert.equal('bb', tasks.concatenateStrings('','bb'));
+        assert.equal('bb', tasks.concatenateStrings(a,'bb'));
     });
 
     it.optional('getStringLength should return the length of string', function() {
