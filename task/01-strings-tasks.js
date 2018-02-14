@@ -201,7 +201,7 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    return '┌' + '─'.repeat(width-2) + '┐\n' + ('│' + ' '.repeat(width-2) + '│\n').repeat(height-2) + '└' + '─'.repeat(width-2) + '┘\n';
 }
 
 
@@ -221,7 +221,15 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    // some wierd stuff, better refactor later (yeah, sure)
+    return str.split('').map((item) => {
+        if ((item.charCodeAt(0) < 110 && item.charCodeAt(0) >= 97) || (item.charCodeAt(0) < 78 && item.charCodeAt(0) >= 65)) {
+            return String.fromCharCode(item.charCodeAt(0) + 13);
+        } else if ((item.charCodeAt(0) < 123 && item.charCodeAt(0) >= 110) || (item.charCodeAt(0) < 91 && item.charCodeAt(0) >= 78)) {
+            return String.fromCharCode(item.charCodeAt(0) - 13);
+        }
+        return item;
+    }).join('');
 }
 
 /**
@@ -238,7 +246,14 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    try {
+        value.toUpperCase();
+        return true;
+    }
+    catch(e) {
+        return false;
+    };
+
 }
 
 
@@ -267,7 +282,9 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    const rankValue = 'A234567891JQK';
+    const colorValue = '♣♦♥♠';
+    return rankValue.indexOf(value[0]) + colorValue.indexOf(value[value.length-1])*13;
 }
 
 
