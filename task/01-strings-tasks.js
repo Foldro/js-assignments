@@ -201,7 +201,7 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    return '┌' + '─'.repeat(width-2) + '┐\n' + ('│' + ' '.repeat(width-2) + '│\n').repeat(height-2) + '└' + '─'.repeat(width-2) + '┘\n';
+    return '┌'.padEnd(width-1, '─') + '┐\n' + ('│'.padEnd(width-1,' ') + '│\n').repeat(height-2) + '└'.padEnd(width-1,'─') + '┘\n';
 }
 
 
@@ -286,7 +286,6 @@ function getCardId(value) {
     const colorValue = '♣♦♥♠';
     return rankValue.indexOf(value[0]) + colorValue.indexOf(value[value.length-1])*13;
 }
-
 
 module.exports = {
     concatenateStrings: concatenateStrings,
