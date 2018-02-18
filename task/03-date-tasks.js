@@ -1,12 +1,12 @@
-'use strict';
 
-/********************************************************************************************
+
+/** ******************************************************************************************
  *                                                                                          *
  * Plese read the following tutorial before implementing tasks:                             *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates#Date_object
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date    *
  *                                                                                          *
- ********************************************************************************************/
+ ******************************************************************************************* */
 
 
 /**
@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+  return new Date(value);
 }
 
 /**
@@ -37,7 +37,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+  return new Date(value);
 }
 
 
@@ -56,7 +56,7 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+  return new Date(date.getFullYear(), 1, 30).getDate() === 1;
 }
 
 
@@ -76,14 +76,19 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+  const timespan = new Date(endDate - startDate);
+  return (`${parseInt((timespan / (1000 * 60 * 60)) % 24, 10)}:`).padStart(3, '0') +
+         (`${parseInt((timespan / (1000 * 60)) % 60, 10)}:`).padStart(3, '0') +
+         (`${parseInt((timespan / 1000) % 60, 10)}.`).padStart(3, '0') +
+         (`${parseInt(timespan % 1000, 10)}`).padEnd(3, '0');
 }
 
 
 /**
- * Returns the angle (in radians) between the hands of an analog clock for the specified Greenwich time.
+ * Returns the angle (in radians) between the hands of an analog
+ * clock for the specified Greenwich time.
  * If you have problem with solution please read: https://en.wikipedia.org/wiki/Clock_angle_problem
- * 
+ *
  * @param {date} date
  * @return {number}
  *
@@ -94,14 +99,19 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+  const minutes = date.getMinutes();
+  const hours = date.getUTCHours() % 12;
+  const minuteAngle = minutes * 6;
+  const hoursAngle = 0.5 * ((60 * hours) + minutes);
+  const angle = hoursAngle > minuteAngle ? hoursAngle - minuteAngle : minuteAngle - hoursAngle;
+  return (angle * Math.PI) / 180;
 }
 
 
 module.exports = {
-    parseDataFromRfc2822: parseDataFromRfc2822,
-    parseDataFromIso8601: parseDataFromIso8601,
-    isLeapYear: isLeapYear,
-    timeSpanToString: timeSpanToString,
-    angleBetweenClockHands: angleBetweenClockHands
+  parseDataFromRfc2822: parseDataFromRfc2822,
+  parseDataFromIso8601: parseDataFromIso8601,
+  isLeapYear: isLeapYear,
+  timeSpanToString: timeSpanToString,
+  angleBetweenClockHands: angleBetweenClockHands,
 };
